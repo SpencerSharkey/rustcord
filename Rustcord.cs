@@ -288,7 +288,7 @@ namespace Oxide.Plugins
                     {
                         GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                         {
-                            chan.CreateMessage(_client, Translate("RUST_OnInitMsg"));
+                            SendMessage(_client, chan, Translate("RUST_OnInitMsg"));
                         });
                     }
                 }
@@ -303,7 +303,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnServerShutdown"));
+                        SendMessage(_client, chan, Translate("RUST_OnServerShutdown"));
                     });
                 }
             }
@@ -534,7 +534,8 @@ namespace Oxide.Plugins
             {
                 if (_settings.Channels[i].perms.Contains("msg_plugininit"))
                 {
-                    GetChannel(_client, _settings.Channels[i].Channelid, c => {
+                    GetChannel(_client, _settings.Channels[i].Channelid, c =>
+                    {
                         c.CreateMessage(_client, "Rustcord Initialized!");
                     }, newguild.id);
                 }
@@ -635,8 +636,7 @@ namespace Oxide.Plugins
 
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate(channel == ConVar.Chat.ChatChannel.Team ? "RUST_OnPlayerTeamChat" : "RUST_OnPlayerChat", text));
-
+                        SendMessage(_client, chan, Translate(channel == ConVar.Chat.ChatChannel.Team ? "RUST_OnPlayerTeamChat" : "RUST_OnPlayerChat", text));
                     });
                 }
             }
@@ -660,7 +660,7 @@ namespace Oxide.Plugins
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
                         // Admin
-                        chan.CreateMessage(_client, Translate("RUST_OnPlayerJoinAdminLog", text));
+                        SendMessage(_client, chan, Translate("RUST_OnPlayerJoinAdminLog", text));
                     });
                 }
             }
@@ -677,7 +677,7 @@ namespace Oxide.Plugins
 
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnPlayerJoin", text));
+                        SendMessage(_client, chan, Translate("RUST_OnPlayerJoin", text));
                     });
                 }
             }
@@ -698,7 +698,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnPlayerQuit", text));
+                        SendMessage(_client, chan, Translate("RUST_OnPlayerQuit", text));
                     });
                 }
             }
@@ -728,7 +728,7 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                             {
-                                chan.CreateMessage(_client, ":skull_crossbones: " + message);
+                                SendMessage(_client, chan, ":skull_crossbones: " + message);
                             });
                         }
                     }
@@ -744,7 +744,7 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                             {
-                                chan.CreateMessage(_client, ":skull_crossbones: " + message);
+                                SendMessage(_client, chan, ":skull_crossbones: " + message);
                             });
                         }
                     }
@@ -760,7 +760,7 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                             {
-                                chan.CreateMessage(_client, ":skull_crossbones: " + message);
+                                SendMessage(_client, chan, ":skull_crossbones: " + message);
                             });
                         }
                     }
@@ -775,7 +775,7 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                             {
-                                chan.CreateMessage(_client, ":skull_crossbones: " + message);
+                                SendMessage(_client, chan, ":skull_crossbones: " + message);
                             });
                         }
                     }
@@ -887,7 +887,7 @@ namespace Oxide.Plugins
                                 GetChannel(_client, channelid, chan =>
                                 {
                                     // Connected Players [{count}/{maxplayers}]: {playerslist}
-                                    chan.CreateMessage(_client, Translate("Discord_PlayersResponse", text));
+                                    SendMessage(_client, chan, Translate("Discord_PlayersResponse", text));
                                 });
                                 text.Clear();
                                 listStr = string.Empty;
@@ -902,7 +902,7 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, channelid, chan =>
                             {
-                                chan.CreateMessage(_client, "Syntax: !kick <steam id> <reason>");
+                                SendMessage(_client, chan, "Syntax: !kick <steam id> <reason>");
                             });
                             return;
                         }
@@ -911,7 +911,7 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, channelid, chan =>
                             {
-                                chan.CreateMessage(_client, "Syntax: !kick <steam id> <reason>");
+                                SendMessage(_client, chan, "Syntax: !kick <steam id> <reason>");
                             });
                             return;
                         }
@@ -920,14 +920,14 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, channelid, chan =>
                             {
-                                chan.CreateMessage(_client, "Error: player not found");
+                                SendMessage(_client, chan, "Error: player not found");
                             });
                             return;
                         }
                         plr.Kick(param.Remove(0, _param[0].Length + 1));
                         GetChannel(_client, channelid, chan =>
                         {
-                            chan.CreateMessage(_client, "Success: Kick command executed!");
+                            SendMessage(_client, chan, "Success: Kick command executed!");
                         });
                         break;
                     }
@@ -937,7 +937,7 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, channelid, chan =>
                             {
-                                chan.CreateMessage(_client, "Syntax: !timeban <steamid> <name> <duration> <reason>");
+                                SendMessage(_client, chan, "Syntax: !timeban <steamid> <name> <duration> <reason>");
                             });
                             return;
                         }
@@ -946,7 +946,7 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, channelid, chan =>
                             {
-                                chan.CreateMessage(_client, "Syntax: !timeban <steamid> <name> <duration> <reason>");
+                                SendMessage(_client, chan, "Syntax: !timeban <steamid> <name> <duration> <reason>");
                             });
                             return;
                         }
@@ -955,7 +955,7 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, channelid, chan =>
                             {
-                                chan.CreateMessage(_client, "Error: player not found");
+                                SendMessage(_client, chan, "Error: player not found");
                             });
                             return;
                         }
@@ -974,7 +974,7 @@ namespace Oxide.Plugins
                         this.Server.Command("banid", args);
                         GetChannel(_client, channelid, chan =>
                         {
-                            chan.CreateMessage(_client, "Success: Ban command executed!");
+                            SendMessage(_client, chan, "Success: Ban command executed!");
                         });
                         break;
                     }
@@ -984,7 +984,7 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, channelid, chan =>
                             {
-                                chan.CreateMessage(_client, "Syntax: !ban <name/id> <reason>");
+                                SendMessage(_client, chan, "Syntax: !ban <name/id> <reason>");
                             });
                             return;
                         }
@@ -993,7 +993,7 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, channelid, chan =>
                             {
-                                chan.CreateMessage(_client, "Syntax: !ban <name/id> <reason>");
+                                SendMessage(_client, chan, "Syntax: !ban <name/id> <reason>");
                             });
                             return;
                         }
@@ -1002,14 +1002,14 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, channelid, chan =>
                             {
-                                chan.CreateMessage(_client, "Error: player not found");
+                                SendMessage(_client, chan, "Error: player not found");
                             });
                             return;
                         }
                         plr.Ban(param.Remove(0, _param[0].Length + 1));
                         GetChannel(_client, channelid, chan =>
                         {
-                            chan.CreateMessage(_client, "Success: Ban command executed!");
+                            SendMessage(_client, chan, "Success: Ban command executed!");
                         });
                         break;
                     }
@@ -1019,7 +1019,7 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, channelid, chan =>
                             {
-                                chan.CreateMessage(_client, "Syntax: !unban <name/id>");
+                                SendMessage(_client, chan, "Syntax: !unban <name/id>");
                             });
                             return;
                         }
@@ -1029,14 +1029,14 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, channelid, chan =>
                             {
-                                chan.CreateMessage(_client, "Error: player not found");
+                                SendMessage(_client, chan, "Error: player not found");
                             });
                             return;
                         }
                         plr.Unban();
                         GetChannel(_client, channelid, chan =>
                         {
-                            chan.CreateMessage(_client, "Success: Unban command executed!");
+                            SendMessage(_client, chan, "Success: Unban command executed!");
                         });
                         break;
                     }
@@ -1046,7 +1046,7 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, channelid, chan =>
                             {
-                                chan.CreateMessage(_client, "Syntax: !com <command>");
+                                SendMessage(_client, chan, "Syntax: !com <command>");
                             });
                             return;
                         }
@@ -1063,7 +1063,7 @@ namespace Oxide.Plugins
                         }
                         GetChannel(_client, channelid, chan =>
                         {
-                            chan.CreateMessage(_client, "Success: Console command executed!");
+                            SendMessage(_client, chan, "Success: Console command executed!");
                         });
                         break;
                     }
@@ -1073,7 +1073,7 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, channelid, chan =>
                             {
-                                chan.CreateMessage(_client, "This command requires the Better Chat Mute plugin.");
+                                SendMessage(_client, chan, "This command requires the Better Chat Mute plugin.");
                                 return;
                             });
                         }
@@ -1081,7 +1081,7 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, channelid, chan =>
                             {
-                                chan.CreateMessage(_client, "Syntax: !mute <playername/steamid> <time (optional)> <reason (optional)>");
+                                SendMessage(_client, chan, "Syntax: !mute <playername/steamid> <time (optional)> <reason (optional)>");
                             });
                             return;
                         }
@@ -1093,7 +1093,7 @@ namespace Oxide.Plugins
                         }
                         GetChannel(_client, channelid, chan =>
                         {
-                            chan.CreateMessage(_client, "Success: Mute command executed!");
+                            SendMessage(_client, chan, "Success: Mute command executed!");
                         });
                         break;
                     }
@@ -1103,7 +1103,7 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, channelid, chan =>
                             {
-                                chan.CreateMessage(_client, "This command requires the Better Chat Mute plugin.");
+                                SendMessage(_client, chan, "This command requires the Better Chat Mute plugin.");
                                 return;
                             });
                         }
@@ -1111,7 +1111,7 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, channelid, chan =>
                             {
-                                chan.CreateMessage(_client, "Syntax: !unmute <playername/steamid>");
+                                SendMessage(_client, chan, "Syntax: !unmute <playername/steamid>");
                             });
                             return;
                         }
@@ -1120,7 +1120,7 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, channelid, chan =>
                             {
-                                chan.CreateMessage(_client, "Syntax: !unmute <playername/steamid>");
+                                SendMessage(_client, chan, "Syntax: !unmute <playername/steamid>");
                             });
                             return;
                         }
@@ -1162,7 +1162,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnPlayerReport", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnPlayerReport", dict));
                     });
                 }
             }
@@ -1189,7 +1189,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnPlayerBug", new Dictionary<string, string>
+                        SendMessage(_client, chan, Translate("RUST_OnPlayerBug", new Dictionary<string, string>
                         {
                             { "playername", player.displayName },
                             { "message", message }
@@ -1214,7 +1214,7 @@ namespace Oxide.Plugins
                     {
                         GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                         {
-                            chan.CreateMessage(_client, Translate("RUST_OnHeliSpawn"));
+                            SendMessage(_client, chan, Translate("RUST_OnHeliSpawn"));
                         });
                     }
                 }
@@ -1227,7 +1227,7 @@ namespace Oxide.Plugins
                     {
                         GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                         {
-                            chan.CreateMessage(_client, Translate("RUST_OnPlaneSpawn"));
+                            SendMessage(_client, chan, Translate("RUST_OnPlaneSpawn"));
                         });
                     }
                 }
@@ -1240,7 +1240,7 @@ namespace Oxide.Plugins
                     {
                         GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                         {
-                            chan.CreateMessage(_client, Translate("RUST_OnShipSpawn"));
+                            SendMessage(_client, chan, Translate("RUST_OnShipSpawn"));
                         });
                     }
                 }
@@ -1254,7 +1254,7 @@ namespace Oxide.Plugins
                     {
                         GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                         {
-                            chan.CreateMessage(_client, Translate("RUST_OnChinookSpawn"));
+                            SendMessage(_client, chan, Translate("RUST_OnChinookSpawn"));
                         });
                     }
                 }
@@ -1267,7 +1267,7 @@ namespace Oxide.Plugins
                     {
                         GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                         {
-                            chan.CreateMessage(_client, Translate("RUST_OnBradleySpawn"));
+                            SendMessage(_client, chan, Translate("RUST_OnBradleySpawn"));
                         });
                     }
                 }
@@ -1303,6 +1303,22 @@ namespace Oxide.Plugins
             }
 
             return null;
+        }
+
+        private void SendMessage(DiscordClient discord_client, Channel channel, string message)
+        {
+            Message outgoing_message = new Message()
+            {
+                content = message,
+                allowed_mentions = new AllowedMentions()
+                {
+                    parse = new List<string>()
+                }
+            };
+
+            channel.CreateMessage(discord_client, outgoing_message);
+
+            return;
         }
 
         private void GetChannel(DiscordClient c, string chan_id, Action<Channel> cb, string guildid = null)
@@ -1391,14 +1407,14 @@ namespace Oxide.Plugins
 
         void OnCrateDropped(HackableLockedCrate crate)
         {
-            var dict = new Dictionary<string, string>{ };
+            var dict = new Dictionary<string, string> { };
             for (int i = 0; i < _channelCount; i++)
             {
                 if (_settings.Channels[i].perms.Contains("log_cratedrop"))
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnCrateDropped", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnCrateDropped", dict));
                     });
                 }
             }
@@ -1413,7 +1429,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnSupplyDrop", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnSupplyDrop", dict));
                     });
                 }
             }
@@ -1431,7 +1447,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnGroupCreated", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnGroupCreated", dict));
                     });
                 }
             }
@@ -1449,7 +1465,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnGroupDeleted", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnGroupDeleted", dict));
                     });
                 }
             }
@@ -1477,7 +1493,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnUserGroupAdded", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnUserGroupAdded", dict));
                     });
                 }
             }
@@ -1500,7 +1516,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnUserGroupRemoved", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnUserGroupRemoved", dict));
                     });
                 }
             }
@@ -1523,7 +1539,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnUserPermissionGranted", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnUserPermissionGranted", dict));
                     });
                 }
             }
@@ -1543,7 +1559,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnGroupPermissionGranted", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnGroupPermissionGranted", dict));
                     });
                 }
             }
@@ -1566,7 +1582,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnUserPermissionRevoked", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnUserPermissionRevoked", dict));
                     });
                 }
             }
@@ -1586,7 +1602,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnGroupPermissionRevoked", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnGroupPermissionRevoked", dict));
                     });
                 }
             }
@@ -1605,7 +1621,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnPlayerKicked", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnPlayerKicked", dict));
                     });
                 }
             }
@@ -1626,7 +1642,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnPlayerBanned", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnPlayerBanned", dict));
                     });
                 }
             }
@@ -1647,7 +1663,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnPlayerUnBanned", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnPlayerUnBanned", dict));
                     });
                 }
             }
@@ -1668,7 +1684,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnPlayerNameChange", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnPlayerNameChange", dict));
                     });
                 }
             }
@@ -1689,7 +1705,7 @@ namespace Oxide.Plugins
                     {
                         GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                         {
-                            chan.CreateMessage(_client, Translate("RUST_OnF1ItemSpawn", dict));
+                            SendMessage(_client, chan, Translate("RUST_OnF1ItemSpawn", dict));
                         });
                     }
                 }
@@ -1719,7 +1735,7 @@ namespace Oxide.Plugins
                         {
                             GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                             {
-                                chan.CreateMessage(_client, Translate("RUST_OnPlayerGesture", dict));
+                                SendMessage(_client, chan, Translate("RUST_OnPlayerGesture", dict));
                             });
                         }
                     }
@@ -1742,7 +1758,7 @@ namespace Oxide.Plugins
                     {
                         GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                         {
-                            chan.CreateMessage(_client, Translate("RUST_OnNoteUpdate", dict));
+                            SendMessage(_client, chan, Translate("RUST_OnNoteUpdate", dict));
                         });
                     }
                 }
@@ -1774,7 +1790,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnPlayerReported", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnPlayerReported", dict));
                     });
                 }
             }
@@ -1791,7 +1807,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnTeamCreated", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnTeamCreated", dict));
                     });
                 }
             }
@@ -1810,7 +1826,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnTeamAcceptInvite", new Dictionary<string, string>
+                        SendMessage(_client, chan, Translate("RUST_OnTeamAcceptInvite", new Dictionary<string, string>
                         {
                             { "playername", player.displayName },
                             { "teamleader", team.GetLeader().displayName }
@@ -1818,7 +1834,7 @@ namespace Oxide.Plugins
                     });
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnTeamAcceptInvite", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnTeamAcceptInvite", dict));
                     });
                 }
             }
@@ -1836,7 +1852,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnTeamLeave", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnTeamLeave", dict));
                     });
                 }
             }
@@ -1853,7 +1869,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnTeamKicked", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnTeamKicked", dict));
                     });
                 }
             }
@@ -1872,7 +1888,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("RUST_OnRCONConnected", dict));
+                        SendMessage(_client, chan, Translate("RUST_OnRCONConnected", dict));
                     });
                 }
             }
@@ -1896,7 +1912,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("PLUGIN_AdminHammer_Enabled", dict));
+                        SendMessage(_client, chan, Translate("PLUGIN_AdminHammer_Enabled", dict));
                     });
                 }
             }
@@ -1913,7 +1929,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("PLUGIN_AdminHammer_Disabled", dict));
+                        SendMessage(_client, chan, Translate("PLUGIN_AdminHammer_Disabled", dict));
                     });
                 }
             }
@@ -1932,7 +1948,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("PLUGIN_AdminRadar_Enabled", dict));
+                        SendMessage(_client, chan, Translate("PLUGIN_AdminRadar_Enabled", dict));
                     });
                 }
             }
@@ -1949,7 +1965,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("PLUGIN_AdminRadar_Disabled", dict));
+                        SendMessage(_client, chan, Translate("PLUGIN_AdminRadar_Disabled", dict));
                     });
                 }
             }
@@ -1971,7 +1987,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("PLUGIN_BetterChatMute_Mute", dict));
+                        SendMessage(_client, chan, Translate("PLUGIN_BetterChatMute_Mute", dict));
                     });
                 }
             }
@@ -1992,7 +2008,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("PLUGIN_BetterChatMute_TimedMute", dict));
+                        SendMessage(_client, chan, Translate("PLUGIN_BetterChatMute_TimedMute", dict));
                     });
                 }
             }
@@ -2011,7 +2027,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("PLUGIN_BetterChatMute_UnMute", dict));
+                        SendMessage(_client, chan, Translate("PLUGIN_BetterChatMute_UnMute", dict));
                     });
                 }
             }
@@ -2029,7 +2045,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("PLUGIN_BetterChatMute_MuteExpire", dict));
+                        SendMessage(_client, chan, Translate("PLUGIN_BetterChatMute_MuteExpire", dict));
                     });
                 }
             }
@@ -2067,7 +2083,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("PLUGIN_Clans_CreateClan", dict));
+                        SendMessage(_client, chan, Translate("PLUGIN_Clans_CreateClan", dict));
                     });
                 }
             }
@@ -2092,7 +2108,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("PLUGIN_Clans_Chat", dict));
+                        SendMessage(_client, chan, Translate("PLUGIN_Clans_Chat", dict));
                     });
                 }
             }
@@ -2113,7 +2129,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("PLUGIN_Clans_MemberJoin", dict));
+                        SendMessage(_client, chan, Translate("PLUGIN_Clans_MemberJoin", dict));
                     });
                 }
             }
@@ -2134,7 +2150,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("PLUGIN_Clans_MemberLeave", dict));
+                        SendMessage(_client, chan, Translate("PLUGIN_Clans_MemberLeave", dict));
                     });
                 }
             }
@@ -2151,10 +2167,10 @@ namespace Oxide.Plugins
             {
                 if (_settings.Channels[i].perms.Contains("plugin_vanish"))
                 {
-                    
+
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("PLUGIN_Vanish_Disappear", dict));
+                        SendMessage(_client, chan, Translate("PLUGIN_Vanish_Disappear", dict));
                     });
                 }
             }
@@ -2171,7 +2187,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("PLUGIN_Vanish_Reappear", dict));
+                        SendMessage(_client, chan, Translate("PLUGIN_Vanish_Reappear", dict));
                     });
                 }
             }
@@ -2195,7 +2211,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("PLUGIN_PrivateMessages_PM", dict));
+                        SendMessage(_client, chan, Translate("PLUGIN_PrivateMessages_PM", dict));
                     });
                 }
             }
@@ -2221,7 +2237,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("PLUGIN_RaidableBases_Started", dict));
+                        SendMessage(_client, chan, Translate("PLUGIN_RaidableBases_Started", dict));
                     });
                 }
             }
@@ -2245,7 +2261,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate("PLUGIN_RaidableBases_Ended", dict));
+                        SendMessage(_client, chan, Translate("PLUGIN_RaidableBases_Ended", dict));
                     });
                 }
             }
@@ -2273,20 +2289,26 @@ namespace Oxide.Plugins
             }
         }
 
-        private Embed SignArtistEmbed(string text, string image)
+        private Message SignArtistEmbed(string text, string image)
         {
-            Embed embed = new Embed
+            return new Message
             {
-                title = text,
-                color = 52326,
-                image = new Embed.Image
+                embed = new Embed
                 {
-                    url = image
+                    title = text,
+                    color = 52326,
+                    image = new Embed.Image
+                    {
+                        url = image
+                    }
+                },
+                allowed_mentions = new AllowedMentions
+                {
+                    parse = new List<string>()
                 }
             };
-
-            return embed;
         }
+
         //DiscordAuth
         private void OnAuthenticate(string steamId, string discordId) => ProcessDiscordAuth("PLUGIN_DiscordAuth_Auth", steamId, discordId);
 
@@ -2306,7 +2328,7 @@ namespace Oxide.Plugins
                 {
                     GetChannel(_client, _settings.Channels[i].Channelid, chan =>
                     {
-                        chan.CreateMessage(_client, Translate(key, new Dictionary<string, string>
+                        SendMessage(_client, chan, Translate(key, new Dictionary<string, string>
                         {
                             { "gamename", player.Name },
                             { "discordname", user.username + "#" + user.discriminator }
